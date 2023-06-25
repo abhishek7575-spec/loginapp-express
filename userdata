@@ -4,6 +4,7 @@ rm -rf /var/lib/cloud/instances/*
 rm -rf /var/lib/cloud/data/*
 rm -rf /var/log/cloud-init*
 rm -rf /var/log/cloud-init-output.log
+rm -rf /var/log/cloud/*
 rm -rf /home/ubuntu/*
 apt update -y
 apt upgrade -y
@@ -30,7 +31,7 @@ rm /etc/nginx/sites-enabled/default
 cat > /etc/nginx/sites-available/app.conf << EOF
 server {
     listen 80;
-    server_name  http://loginload-449904212.ap-south-1.elb.amazonaws.com/;
+    server_name  http://loginappload-309326475.ap-south-1.elb.amazonaws.com/;
 
     location / {
         proxy_pass http://localhost:3000;
