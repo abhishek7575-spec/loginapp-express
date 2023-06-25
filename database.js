@@ -2,10 +2,10 @@ const mysql = require('mysql');
 
 // Set up MySQL connection
 const connection = mysql.createConnection({
-  host: 'webapp.cg4d8hliaysi.ap-south-1.rds.amazonaws.com',
+  host: 'loginappdb.cg4d8hliaysi.ap-south-1.rds.amazonaws.com',
   user: 'abhishek',
   password: 'abhishek185',
-  database: 'webappdb'
+  database: 'loginappdb'
 });
 
 // Connect to MySQL

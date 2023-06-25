@@ -1,0 +1,58 @@
+#!/bin/bash
+cloud-init clean --logs
+rm -rf /var/lib/cloud/instances/*
+rm -rf /var/lib/cloud/data/*
+rm -rf /var/log/cloud-init*
+rm -rf /var/log/cloud-init-output.log
+rm -rf /home/ubuntu/*
+apt update -y
+apt upgrade -y
+cd /home/ubuntu
+touch test1
+curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+touch test2
+apt install nodejs -y
+touch test3
+apt install git -y
+touch test4
+git clone https://github.com/abhishek7575-spec/loginapp-express
+touch test5
+cd loginapp-express/
+touch test6
+npm install -y
+npm install pm2 -g
+pm2 start index.js
+pm2 save
+pm2 startup
+pm2 save
+apt install nginx -y
+rm /etc/nginx/sites-enabled/default
+cat > /etc/nginx/sites-available/app.conf << EOF
+server {
+    listen 80;
+    server_name  http://loginload-449904212.ap-south-1.elb.amazonaws.com/;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_cache_bypass \$http_upgrade;
+    }
+
+    location /signup {
+        proxy_pass http://localhost:3000/signup;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_cache_bypass \$http_upgrade;
+    }
+}
+EOF
+touch test7
+ln -s /etc/nginx/sites-available/app.conf /etc/nginx/sites-enabled/app.conf
+service nginx restart
+systemctl enable nginx
+touch test8
