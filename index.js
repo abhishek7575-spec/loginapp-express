@@ -19,7 +19,7 @@ app.post('/login', (req, res) => {
     .then(user => {
       if (user) {
         // Successful login
-        res.send(`<script>alert('Login successful'); window.location.href = 'https://www.fico.com';</script>`);
+        res.send(`<script>alert('Login successful'); window.location.href = 'https://www.google.com';</script>`);
       } else {
         // Invalid credentials
         res.send(`<script>alert('Invalid email or password');</script>`);

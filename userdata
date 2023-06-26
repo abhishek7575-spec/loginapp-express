@@ -31,7 +31,7 @@ rm /etc/nginx/sites-enabled/default
 cat > /etc/nginx/sites-available/app.conf << EOF
 server {
     listen 80;
-    server_name  http://loginappload-309326475.ap-south-1.elb.amazonaws.com/;
+    server_name  http://loadbalancing-113288908.ap-south-1.elb.amazonaws.com/;
 
     location / {
         proxy_pass http://localhost:3000;
