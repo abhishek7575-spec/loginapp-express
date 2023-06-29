@@ -1,11 +1,25 @@
 const mysql = require('mysql');
 
+
+
+const fs = require('fs');
+
+// Read the secrets from the file
+const secretValue = JSON.parse(fs.readFileSync('secrets.json', 'utf8'));
+
+// Access and print the values from the file we created in python
+console.log('RDS_ENDPOINT:', secretValue.RDS_ENDPOINT);
+console.log('DATABASE_NAME:', secretValue.DATABASE_NAME);
+console.log('USERNAME:', secretValue.USERNAME);
+
+
+
 // Set up MySQL connection
 const connection = mysql.createConnection({
-  host: 'process.env.DB_HOST',
-  user: 'process.env.DB_USER',
-  password: 'process.env.DB_PASSWORD',
-  database: 'process.env.DB_NAME'
+  host: secretValue.RDS_ENDPOINT,
+  user: secretValue.USERNAME,
+  password: secretValue.PASSWORD,
+  database: secretValue.DATABASE_NAME
 });
 
 // Connect to MySQL
@@ -87,4 +101,3 @@ getUserByEmailAndPassword: (email, password) => {
 };
 
 module.exports = database;
-

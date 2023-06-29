@@ -13,14 +13,12 @@ def set_environment_variables():
     # Retrieve the secret value
     response = client.get_secret_value(SecretId=secret_name)
 
-    # Parse the secret JSON string
-    secret_value = json.loads(response['SecretString'])
-
-    # Set environment variables
-    os.environ['RDS_ENDPOINT'] = secret_value['RDS_ENDPOINT']
-    os.environ['USERNAME'] = secret_value['USERNAME']
-    os.environ['PASSWORD'] = secret_value['PASSWORD']
-    os.environ['DATABASE_NAME'] = secret_value['DATABASE_NAME']
+    if 'SecretString' in response:
+        secret_value = response['SecretString']
+    # Write the secret value to a file
+        with open('secrets.json', 'w') as file:
+            file.write(secret_value)
+    else:
+        pass
 
 set_environment_variables()
-
